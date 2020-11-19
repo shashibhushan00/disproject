@@ -4,7 +4,7 @@ const file = require("./file");
 const ip = require('ip');
 const { exit } = require("process");
 const { command } = require("./file");
-const kdc = require('../KDC/kdc.js');
+const kdc = require('../KDC/kdc-util.js');
 
 const PORT = "4000";
 const ADDRESS = "0.0.0.0";
@@ -55,12 +55,10 @@ let serveruid = ''; //unique id of server
 command('cd ./FSH').run()
 .listen({
     onRejected: () => {
-        console.log("Unique ID assignment failed.");
-        console.log("File system mount failed.");
+        console.log("Failed to start File System!!!");
     },
     onResolved: () => {
         serveruid = kdc.uids.fs;
-        console.log("Unique ID assigned to FS by KDC - ", kdc.uids.fs);
-        console.log("File System Mounted");
+        console.log("File Server started on port", PORT);
     }
 })
